@@ -1,21 +1,31 @@
-import * as dotenv from 'dotenv'
 import { HardhatUserConfig } from 'hardhat/config'
 import '@nomicfoundation/hardhat-toolbox'
-
-dotenv.config()
+import 'xdeployer'
+import { networks } from './networks.config'
+import { Network } from './util/network.enum'
+import { createXdeployConfig, XdeployPartialConfig } from './util/xdeploy-config-creator'
 
 const config: HardhatUserConfig = {
     solidity: '0.8.18',
-    networks: {
-        goerli: {
-            url: `https://goerli.infura.io/v3/${process.env.INFURA_PROJECT_ID}`,
-            chainId: 5,
-            accounts: { mnemonic: process.env.MNEMONIC }
-        }
-    },
-    etherscan: {
-        apiKey: process.env.ETHERSCAN_KEY
-    }
+    networks: networks
 }
+
+const xdeployConfig: XdeployPartialConfig = {
+    contract: 'Sender',
+    networks: [Network.mumbai, Network.goerli]
+}
+
+/*
+Here is an example of how to use the xdeployer config with all params:
+
+const xdeployConfig: XdeployPartialConfig = {
+    contract: 'Sender',
+    contractArgs: [],
+    salt: 'WAGMI',
+    networks: [Network.mumbai, Network.goerli],
+    gasLimit: 1.2 * 10 ** 6
+}
+*/
+if (process.env.XDEPLOY === 'true') config.xdeploy = createXdeployConfig(config, xdeployConfig)
 
 export default config

@@ -1,10 +1,8 @@
-# Hardhat Template
+# Hardhat Deployment Tool
 
-Sample task:
+Easy deploy smart contracts with the same address on any network.
 
 ```shell
-npx hardhat help
-npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
+npm run xdeploy # deploy contracts on multiple networks
+npm run deploy  # deploy contract on one network
 ```

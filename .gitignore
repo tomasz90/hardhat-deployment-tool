@@ -10,3 +10,5 @@ typechain-types
 cache
 artifacts
 
+# xdeploy CREATE2 receipts
+deployments
