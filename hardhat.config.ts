@@ -7,7 +7,10 @@ import { createXdeployConfig, XdeployPartialConfig } from './util/xdeploy-config
 
 const config: HardhatUserConfig = {
     solidity: '0.8.18',
-    networks: networks
+    networks: networks,
+    etherscan: {
+        apiKey: process.env.ETHERSCAN_KEY
+    }
 }
 
 const xdeployConfig: XdeployPartialConfig = {

@@ -24,6 +24,7 @@ contract Sender is Ownable {
         uint value = _value / to.length;
         for (uint i; i < to.length; i++) {
             ownersToTokensToValues[to[i]][token] += value;
+            // push token to tokens
         }
     }
 
