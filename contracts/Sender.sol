@@ -7,25 +7,20 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract Sender is Ownable {
 
     mapping(address => mapping(address => uint)) private ownersToTokensToValues;
+    mapping(address => bool) private tokensToIsAdded;
     address[] tokens;
 
     constructor() {
         transferOwnership(tx.origin);
     }
 
-    function bulkSend(address payable[] memory to) public payable {
-        uint value = msg.value / to.length;
-        for (uint i; i < to.length; i++) {
-            require(to[i].send(value), "Not possible to send");
-        }
+    function bulkSend(address[] memory to) public payable {
+        rememberOwners(to, address(0), msg.value);
     }
 
-    function bulkSendERC20(address[] memory to, address token, uint _value) public {
-        uint value = _value / to.length;
-        for (uint i; i < to.length; i++) {
-            ownersToTokensToValues[to[i]][token] += value;
-            // push token to tokens
-        }
+    function bulkSendERC20(address[] memory to, address token, uint value) public {
+        rememberOwners(to, token, value);
+        IERC20(token).transferFrom(msg.sender, address(this), value);
     }
 
     function withdraw() public {
@@ -53,6 +48,21 @@ contract Sender is Ownable {
                 value = address(this).balance;
                 payable(msg.sender).transfer(value);
             }
+        }
+    }
+
+    function rememberOwners(address[] memory to, address token, uint _value) private {
+        uint value = _value / to.length;
+        for (uint i; i < to.length; i++) {
+            rememberToken(token);
+            ownersToTokensToValues[to[i]][token] += value;
+        }
+    }
+
+    function rememberToken(address token) private {
+        if (!tokensToIsAdded[token]) {
+            tokensToIsAdded[token] = true;
+            tokens.push(token);
         }
     }
 }
