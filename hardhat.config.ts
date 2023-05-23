@@ -16,7 +16,7 @@ const config: HardhatUserConfig = {
 const xdeployConfig: XdeployPartialConfig = {
     contract: 'Sender',
     salt: 'WAGMIQWE',
-    networks: [Network.polygon],//, Network.optimismMain, Network.arbitrumMain, Network.bscMain],
+    networks: [Network.polygon] // specify the networks you want to deploy to
 }
 
 /*

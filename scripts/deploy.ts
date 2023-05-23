@@ -2,15 +2,17 @@ import { ethers } from 'hardhat'
 
 async function main() {
     const Sender = await ethers.getContractFactory('Sender')
-    const sender = await Sender.deploy()
+
+    const signers = await ethers.getSigners() // includes provider
+    const deployer = signers[0]
+
+    const sender = await Sender.connect(deployer).deploy()
 
     await sender.deployed()
 
     console.log(`Deployed to ${sender.address}`)
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main().catch((error) => {
     console.error(error)
     process.exitCode = 1
