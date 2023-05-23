@@ -1,4 +1,4 @@
-# Hardhat Deployment Tool
+# Hardhat CREATE2 Deployment Tool
 
 Easily deploy smart contracts with the same address on any network using CREATE2.
 
