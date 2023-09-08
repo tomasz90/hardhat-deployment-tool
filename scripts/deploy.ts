@@ -6,8 +6,10 @@ async function main() {
 
     const signers = await ethers.getSigners() // includes provider
     const deployer = signers[0]
+    console.log(`Deployer address: ${deployer.address}`)
+    console.log(`Deploying: ${hardhatConfig.contract} with args[]: ${hardhatConfig.contractArgs}`)
 
-    const contract = await ContractFactory.connect(deployer).deploy()
+    const contract = await ContractFactory.connect(deployer).deploy(hardhatConfig.contractArgs)
 
     await contract.deployed()
 
