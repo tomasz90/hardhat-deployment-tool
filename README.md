@@ -7,4 +7,5 @@ To deploy any contract just create yours inside contracts dir, compile and tweak
 ```shell
 npm run xdeploy # deploy contracts on multiple networks defined in hardhat.config.ts
 npm run deploy $networkName  # deploy contract on one desired network
+npm run deployVerify $networkName  # deploy & verify contract on one desired network
 ```

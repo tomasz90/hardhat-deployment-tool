@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "deploy": "npx hardhat run scripts/deploy.ts --network ",
+        "deployVerify": "VERIFY=true npx hardhat run scripts/deploy.ts --network ",
         "xdeploy": "XDEPLOY=true npx hardhat xdeploy",
         "pretty": "prettier --write .",
         "test": "echo \"Error: no test specified\" && exit 1"

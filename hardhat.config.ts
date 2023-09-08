@@ -14,33 +14,24 @@ const accounts: HttpNetworkAccountsUserConfig = { mnemonic: process.env.MNEMONIC
 
 export interface CustomHardhatUserConfig extends HardhatUserConfig {
     contract: string,
-    contractArgs?: string[],
-    gasLimit?: number
+    gasLimit?: number,
+    contractArgs: any[],
 }
 
 export const config: CustomHardhatUserConfig = {
-    contract: 'Main',
-    contractArgs: [],
+    contract: 'BulkSender',
+    contractArgs: [], // todo: this is not working for xdeployConfig right now
     solidity: '0.8.18',
-    networks: networks,
-    etherscan: {
-        apiKey: process.env.ETHERSCAN_KEY
-    },
+    etherscan: { apiKey: process.env.ETHERSCAN_KEY },
     gasLimit: undefined
 }
-
-config.networks = {
-    // TESTNETS
-    [Network.goerli]: {
-        url: `https://goerli.blockpi.network/v1/rpc/public`,
-        accounts: accounts
-    }
-}//populateCommonArgs(config.networks!!,{ gas: config.gasLimit, accounts: accounts })
 
 const xdeployConfig: XdeployPartialConfig = {
     salt: randomUUID(),
     networks: [Network.goerli] // specify the networks you want to deploy to
 }
+
+config.networks = populateCommonArgs(networks,{ gas: config.gasLimit, accounts: accounts })
 
 if (process.env.XDEPLOY === 'true') config.xdeploy = createXdeployConfig(config, xdeployConfig)
 

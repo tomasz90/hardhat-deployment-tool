@@ -20,6 +20,9 @@ export const networks: NetworksUserConfig = {
     },
 
     // MAINNETS
+    [Network.ethMain]: {
+        url: `https://mainnet.infura.io/v3/${process.env.INFURA_PROJECT_ID}`
+    },
     [Network.polygon]: {
         url: `https://polygon-mainnet.infura.io/v3/${process.env.INFURA_PROJECT_ID}`
     },
@@ -34,13 +37,13 @@ export const networks: NetworksUserConfig = {
     }
 }
 
-export function populateCommonArgs(networks: NetworksUserConfig, ...args: HttpNetworkUserConfig[]): NetworksUserConfig {
+export function populateCommonArgs(networks: NetworksUserConfig, args: HttpNetworkUserConfig): NetworksUserConfig {
     const updatedNetworks: NetworksUserConfig = {}
-
     for (const [key, value] of Object.entries(networks)) {
         updatedNetworks[key] = {
-            ...value!!,
-            ...args
+            ...value,
+            accounts: args.accounts,
+            gas: args.gas
         }
     }
     return updatedNetworks

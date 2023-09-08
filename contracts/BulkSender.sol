@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Main is Ownable {
+contract BulkSender is Ownable {
 
     mapping(address => mapping(address => uint)) private ownersToTokensToValues;
     mapping(address => bool) private tokensToIsAdded;
