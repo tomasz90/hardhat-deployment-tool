@@ -12,3 +12,5 @@ artifacts
 
 # xdeploy CREATE2 receipts
 deployments
+
+contracts/GasBurner.sol

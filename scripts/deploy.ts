@@ -1,16 +1,17 @@
 import { ethers } from 'hardhat'
+import hardhatConfig from '../hardhat.config'
 
 async function main() {
-    const Sender = await ethers.getContractFactory('Sender')
+    const ContractFactory = await ethers.getContractFactory(hardhatConfig.contract)
 
     const signers = await ethers.getSigners() // includes provider
     const deployer = signers[0]
 
-    const sender = await Sender.connect(deployer).deploy()
+    const contract = await ContractFactory.connect(deployer).deploy()
 
-    await sender.deployed()
+    await contract.deployed()
 
-    console.log(`Deployed to ${sender.address}`)
+    console.log(`Deployed to ${contract.address}`)
 }
 
 main().catch((error) => {

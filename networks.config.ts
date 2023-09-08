@@ -15,7 +15,7 @@ const accounts: HttpNetworkAccountsUserConfig = {
 export const networks: NetworksUserConfig = {
     // TESTNETS
     [Network.goerli]: {
-        url: `https://goerli.infura.io/v3/${process.env.INFURA_PROJECT_ID}`,
+        url: `https://goerli.blockpi.network/v1/rpc/public`,
         accounts: accounts
     },
     [Network.arbitrumTestnet]: {
