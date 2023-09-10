@@ -8,6 +8,7 @@
         "deployVerify": "VERIFY=true npx hardhat run scripts/deploy.ts --network ",
         "xdeploy": "XDEPLOY=true npx hardhat xdeploy; rm ./deploy-args.ts",
         "interact": "npx hardhat run scripts/interact.ts",
+        "fetch": "npx hardhat run scripts/fetch.ts",
         "pretty": "prettier --write .",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
@@ -16,6 +17,7 @@
     "license": "ISC",
     "dependencies": {
         "@openzeppelin/contracts": "^4.8.3",
+        "axios": "^1.5.0",
         "crypto": "^1.0.1",
         "dotenv": "^16.0.3",
         "hardhat": "^2.14.0",

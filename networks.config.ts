@@ -3,6 +3,7 @@ import { Network } from './util/network.enum'
 
 interface NetworkUserConfigWithBlockscans extends HttpNetworkUserConfig {
     scan: string
+    scanApi?: string
 }
 
 interface NetworksUserConfigWithBlockscans {
@@ -13,7 +14,8 @@ export const networks: NetworksUserConfigWithBlockscans = {
     // TESTNETS
     [Network.goerli]: {
         url: `https://goerli.blockpi.network/v1/rpc/public`,
-        scan: `https://goerli.etherscan.io`
+        scan: `https://goerli.etherscan.io`,
+        scanApi: `https://api-goerli.etherscan.io`
     },
     [Network.arbitrumTestnet]: {
         url: `https://rpc.goerli.arbitrum.gateway.fm`,
