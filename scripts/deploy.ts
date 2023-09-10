@@ -1,6 +1,7 @@
 import { ethers } from 'hardhat'
 import hardhatConfig from '../hardhat.config'
 import { getScanUrl } from '../networks.config'
+
 const hre = require('hardhat')
 
 async function main() {
@@ -12,7 +13,8 @@ async function main() {
     console.log(`Deploying: ${hardhatConfig.contract} with args[]: ${hardhatConfig.contractArgs} and value: ${ethers.utils.formatEther(hardhatConfig.value)} ETH`)
 
     const ContractFactory = await ethers.getContractFactory(hardhatConfig.contract)
-    let contract = await ContractFactory.connect(deployer).deploy(...hardhatConfig.contractArgs, { value: hardhatConfig.value })
+    let contract = await ContractFactory.connect(deployer).deploy(...hardhatConfig.contractArgs,
+        { gasLimit: hardhatConfig.gasLimit, value: hardhatConfig.value })
     contract = await contract.deployed()
 
     console.log(`Deployed to: ${getScanUrl(hre.network)}/address/${contract.address}`)
@@ -29,11 +31,31 @@ async function main() {
         console.log(`Verifying on Etherscan...`)
         await contract.deployTransaction.wait(5)
 
-        await hre.run('verify:verify', {
+        const verify = async () => await hre.run('verify:verify', {
             address: contract.address,
             constructorArguments: hardhatConfig.contractArgs
         })
-        console.log(`Verified.`)
+
+        let retryCount = 0
+        const maxRetries = 3
+        let confirmationCount = 5
+
+        while (retryCount < maxRetries) {
+            try {
+                await contract.deployTransaction.wait(confirmationCount)
+                await verify()
+                console.log(`Verified.`)
+                break
+            } catch (e) {
+                console.log('Verification failed. Retrying...')
+                retryCount++
+                confirmationCount += 5
+            }
+
+            if (retryCount === maxRetries) {
+                console.log(`Verification failed after ${maxRetries} retries.`)
+            }
+        }
     }
 }
 

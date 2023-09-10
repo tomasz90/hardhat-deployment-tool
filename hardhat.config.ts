@@ -1,7 +1,7 @@
 import { HardhatUserConfig } from 'hardhat/config'
 import '@nomicfoundation/hardhat-toolbox'
 import 'xdeployer'
-import { networks, populateCommonArgs } from './networks.config'
+import { getApiKeys, networks, getNetworksWithArgs } from './networks.config'
 import { Network } from './util/network.enum'
 import { createXdeployConfig, XdeployPartialConfig } from './util/xdeploy-config-creator'
 import { randomUUID } from 'crypto'
@@ -24,11 +24,11 @@ export interface CustomHardhatUserConfig extends HardhatUserConfig {
 export const config: CustomHardhatUserConfig = {
     contract: 'TestLongtail',
     contractArgs: [],
-    value: BigInt(5e16),
+    value: BigInt(0),
     deployerIndex: 0,
     gasLimit: undefined,
     solidity: '0.8.18',
-    etherscan: { apiKey: process.env.ETHERSCAN_KEY }
+    etherscan: { apiKey: getApiKeys() }
 }
 
 const xdeployConfig: XdeployPartialConfig = {
@@ -36,7 +36,7 @@ const xdeployConfig: XdeployPartialConfig = {
     networks: [Network.goerli, Network.sepolia]
 }
 
-config.networks = populateCommonArgs(networks,{ gas: config.gasLimit, accounts: accounts })
+config.networks = getNetworksWithArgs(networks,{ gasLimit: config.gasLimit, accounts: accounts })
 
 if (process.env.XDEPLOY === 'true') config.xdeploy = createXdeployConfig(config, xdeployConfig)
 
