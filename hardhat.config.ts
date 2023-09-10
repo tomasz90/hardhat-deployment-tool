@@ -16,6 +16,7 @@ export interface CustomHardhatUserConfig extends HardhatUserConfig {
     contract: string,
     contractArgs: any[],
     value: number,
+    deployerIndex: number,
     gasLimit?: number,
 }
 
@@ -23,6 +24,7 @@ export const config: CustomHardhatUserConfig = {
     contract: 'BulkSender',
     contractArgs: [], // todo: this is not working for xdeployConfig right now
     value: 0,
+    deployerIndex: 0,
     gasLimit: undefined,
     solidity: '0.8.18',
     etherscan: { apiKey: process.env.ETHERSCAN_KEY }
