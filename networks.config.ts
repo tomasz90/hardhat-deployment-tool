@@ -1,4 +1,4 @@
-import { HttpNetworkUserConfig, NetworksUserConfig, NetworkUserConfig } from 'hardhat/src/types/config'
+import { HttpNetworkUserConfig, NetworksUserConfig } from 'hardhat/src/types/config'
 import { Network } from './util/network.enum'
 
 interface NetworkUserConfigWithBlockscans extends HttpNetworkUserConfig {
@@ -16,6 +16,10 @@ export const networks: NetworksUserConfigWithBlockscans = {
         url: `https://goerli.blockpi.network/v1/rpc/public`,
         scan: `https://goerli.etherscan.io`,
         scanApi: `https://api-goerli.etherscan.io`
+    },
+    [Network.sepolia]: {
+        url: `https://rpc.notadegen.com/eth/sepolia`,
+        scan: `https://sepolia.etherscan.io`
     },
     [Network.arbitrumTestnet]: {
         url: `https://rpc.goerli.arbitrum.gateway.fm`,

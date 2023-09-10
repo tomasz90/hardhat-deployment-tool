@@ -7,6 +7,7 @@ import { createXdeployConfig, XdeployPartialConfig } from './util/xdeploy-config
 import { randomUUID } from 'crypto'
 import { HttpNetworkAccountsUserConfig } from 'hardhat/types'
 import * as dotenv from 'dotenv'
+import { BigNumberish } from '@ethersproject/bignumber/src.ts/bignumber'
 
 dotenv.config()
 
@@ -15,7 +16,7 @@ const accounts: HttpNetworkAccountsUserConfig = { mnemonic: process.env.MNEMONIC
 export interface CustomHardhatUserConfig extends HardhatUserConfig {
     contract: string,
     contractArgs: any[],
-    value: number,
+    value: BigNumberish,
     deployerIndex: number,
     gasLimit?: number,
 }
@@ -23,7 +24,7 @@ export interface CustomHardhatUserConfig extends HardhatUserConfig {
 export const config: CustomHardhatUserConfig = {
     contract: 'TestLongtail',
     contractArgs: [],
-    value: 2e15,
+    value: BigInt(5e16),
     deployerIndex: 0,
     gasLimit: undefined,
     solidity: '0.8.18',
@@ -32,7 +33,7 @@ export const config: CustomHardhatUserConfig = {
 
 const xdeployConfig: XdeployPartialConfig = {
     salt: randomUUID(),
-    networks: [Network.goerli]
+    networks: [Network.goerli, Network.sepolia]
 }
 
 config.networks = populateCommonArgs(networks,{ gas: config.gasLimit, accounts: accounts })

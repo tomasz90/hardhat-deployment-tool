@@ -1,12 +1,12 @@
 import { ethers } from 'hardhat'
-import { Test__factory } from './../typechain-types'
+import { TestLongtail__factory } from './../typechain-types'
 import { Network } from '../util/network.enum'
 import { networks } from '../networks.config'
 
 // config (no need to config anything in hardhat.config.ts)
 const signerIndex = 0
-const network = Network.goerli
-const contractAddress = '0xbDbB032e0b8933a4aCf33F56e31d8ce882bFf8Cd'
+const network = Network.sepolia
+const contractAddress = '0x88a4fB4c14c09Af5CdaEf94C606d0d87e4Bb93E3'
 
 const hd_path = `m/44'/60'/0'/0/${signerIndex}`
 
@@ -21,9 +21,9 @@ async function main() {
     console.log(`Actor [${signerIndex}], address: ${await signer.getAddress()}`)
 
     // set contract factory and fn to call
-    let contract = new Test__factory().attach(contractAddress).connect(signer)
+    let contract = new TestLongtail__factory().attach(contractAddress).connect(signer)
     // add params if needed ex: await contract.test({ gasLimit: 1000000, gasPrice: 10, value: 10})
-    const tx = await contract.test()
+    const tx = await contract.withdraw()
     const receipt = await tx.wait()
 
     console.log(`Interacted with: ${scan}/address/${contractAddress}`)
