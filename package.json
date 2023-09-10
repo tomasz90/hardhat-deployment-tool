@@ -7,6 +7,7 @@
         "deploy": "npx hardhat run scripts/deploy.ts --network ",
         "deployVerify": "VERIFY=true npx hardhat run scripts/deploy.ts --network ",
         "xdeploy": "XDEPLOY=true npx hardhat xdeploy; rm ./deploy-args.ts",
+        "interact": "npx hardhat run scripts/interact.ts",
         "pretty": "prettier --write .",
         "test": "echo \"Error: no test specified\" && exit 1"
     },

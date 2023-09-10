@@ -4,7 +4,6 @@ import { getScanUrl } from '../networks.config'
 const hre = require('hardhat')
 
 async function main() {
-    const ContractFactory = await ethers.getContractFactory(hardhatConfig.contract)
 
     const signers = await ethers.getSigners() // includes provider
     const deployer = signers[hardhatConfig.deployerIndex]
@@ -12,6 +11,7 @@ async function main() {
     console.log(`Deployer [${hardhatConfig.deployerIndex}], address: ${deployer.address}`)
     console.log(`Deploying: ${hardhatConfig.contract} with args[]: ${hardhatConfig.contractArgs} and value: ${ethers.utils.formatEther(hardhatConfig.value)} ETH`)
 
+    const ContractFactory = await ethers.getContractFactory(hardhatConfig.contract)
     let contract = await ContractFactory.connect(deployer).deploy(...hardhatConfig.contractArgs, { value: hardhatConfig.value })
     contract = await contract.deployed()
 

@@ -21,7 +21,7 @@ export interface CustomHardhatUserConfig extends HardhatUserConfig {
 }
 
 export const config: CustomHardhatUserConfig = {
-    contract: 'BulkSender',
+    contract: 'Test',
     contractArgs: [],
     value: 0,
     deployerIndex: 0,
