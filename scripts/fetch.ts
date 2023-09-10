@@ -18,8 +18,8 @@ async function main() {
     const scanApi = networks[network].scanApi
     const provider = new ethers.providers.JsonRpcProvider(url)
 
-    const wallets = await ethers.Wallet.fromMnemonic(process.env.MNEMONIC!, hd_path)
-    const signer = wallets.connect(provider)
+    const wallet = await ethers.Wallet.fromMnemonic(process.env.MNEMONIC!, hd_path)
+    const signer = wallet.connect(provider)
 
     let USDTContract = (await getContractAbi(contractAddress, scanApi!!)).connect(signer)
 
