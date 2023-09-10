@@ -2,10 +2,13 @@ import { HttpNetworkUserConfig, NetworksUserConfig } from 'hardhat/src/types/con
 import { ethers } from 'ethers'
 import { CustomHardhatUserConfig } from '../hardhat.config'
 import { randomBytes } from 'crypto'
+import fs from 'fs';
+
+const constructorArgsFilePath = './deploy-args.ts';
 
 export interface XdeployConfig extends XdeployPartialConfig {
     contract: string
-    contractArgs?: string[]
+    constructorArgsPath: string,
     signer: string
     rpcUrls: string[]
     gasLimit?: number
@@ -37,9 +40,13 @@ export function createXdeployConfig(
         (networkName) => (hardhatConfig.networks![networkName] as HttpNetworkUserConfig).url!
     )
 
+    const data = `const data = ${JSON.stringify(hardhatConfig.contractArgs)}; export { data };`;
+
+    fs.writeFileSync(constructorArgsFilePath, data);
+
     return {
         contract: hardhatConfig.contract,
-        contractArgs: hardhatConfig.contractArgs,
+        constructorArgsPath: constructorArgsFilePath,
         salt: salt,
         networks: xdeployPartialConfig.networks,
         gasLimit: hardhatConfig.gasLimit,

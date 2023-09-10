@@ -22,7 +22,7 @@ export interface CustomHardhatUserConfig extends HardhatUserConfig {
 
 export const config: CustomHardhatUserConfig = {
     contract: 'BulkSender',
-    contractArgs: [], // todo: this is not working for xdeployConfig right now
+    contractArgs: [],
     value: 0,
     deployerIndex: 0,
     gasLimit: undefined,
@@ -32,7 +32,7 @@ export const config: CustomHardhatUserConfig = {
 
 const xdeployConfig: XdeployPartialConfig = {
     salt: randomUUID(),
-    networks: [Network.goerli] // specify the networks you want to deploy to
+    networks: [Network.goerli]
 }
 
 config.networks = populateCommonArgs(networks,{ gas: config.gasLimit, accounts: accounts })
