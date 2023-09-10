@@ -1,7 +1,15 @@
-import { HttpNetworkUserConfig, NetworksUserConfig } from 'hardhat/src/types/config'
+import { HttpNetworkUserConfig, NetworksUserConfig, NetworkUserConfig } from 'hardhat/src/types/config'
 import { Network } from './util/network.enum'
 
-export const networks: NetworksUserConfig = {
+interface NetworkUserConfigWithBlockscans extends HttpNetworkUserConfig {
+    scan?: string
+}
+
+interface NetworksUserConfigWithBlockscans extends NetworksUserConfig {
+    [networkName: string]: NetworkUserConfigWithBlockscans | undefined;
+}
+
+export const networks: NetworksUserConfigWithBlockscans = {
     // TESTNETS
     [Network.goerli]: {
         url: `https://goerli.blockpi.network/v1/rpc/public`

@@ -14,16 +14,18 @@ const accounts: HttpNetworkAccountsUserConfig = { mnemonic: process.env.MNEMONIC
 
 export interface CustomHardhatUserConfig extends HardhatUserConfig {
     contract: string,
-    gasLimit?: number,
     contractArgs: any[],
+    value: number,
+    gasLimit?: number,
 }
 
 export const config: CustomHardhatUserConfig = {
     contract: 'BulkSender',
     contractArgs: [], // todo: this is not working for xdeployConfig right now
+    value: 0,
+    gasLimit: undefined,
     solidity: '0.8.18',
-    etherscan: { apiKey: process.env.ETHERSCAN_KEY },
-    gasLimit: undefined
+    etherscan: { apiKey: process.env.ETHERSCAN_KEY }
 }
 
 const xdeployConfig: XdeployPartialConfig = {
